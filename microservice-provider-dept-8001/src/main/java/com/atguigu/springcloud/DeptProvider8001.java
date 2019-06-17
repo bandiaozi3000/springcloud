@@ -14,3 +14,4 @@ public class DeptProvider8001 {
         SpringApplication.run(DeptProvider8001.class,args);
     }
 }
+

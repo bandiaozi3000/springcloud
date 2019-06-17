@@ -24,7 +24,10 @@ public class DeptController {
     }
 
     @GetMapping("/dept/{id}")
-    public Dept getById(@PathVariable("id") Long id){
+    public Dept getById(@PathVariable("id") Long id) throws Exception {
+        if(id==1){
+            throw new Exception();
+        }
         return deptService.findById(id);
     }
 

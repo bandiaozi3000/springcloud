@@ -20,8 +20,8 @@ public class DeptFeignServiceFallbackFactory implements FallbackFactory<DeptFeig
             public Dept getById(Long id) {
                 Dept dept = new Dept();
                 dept.setDeptNo(id);
-                dept.setDname("该id" + id + "没有对应的服务信息,Consumer客户端提供的降级信息，此刻服务Provider已停止服务");
-                dept.setDb_source("no this database in Mysql");
+                dept.setdName("该id" + id + "没有对应的服务信息,Consumer客户端提供的降级信息，此刻服务Provider已停止服务");
+                dept.setDbSource("no this database in Mysql");
                 return dept;
             }
 

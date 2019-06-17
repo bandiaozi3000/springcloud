@@ -9,11 +9,11 @@
     </select>
 
     <insert id="addDept" parameterType="Dept">
-        insert into dept(dname,db_source) values (#{dname},#{db_source});
+        insert into dept(d_name,db_source) values (#{dName},#{dbSource});
     </insert>
 
     <select id="findById" resultType="Dept">
-        select * from dept where deptNo=#{param1};
+        select * from dept where dept_no=#{param1};
     </select>
 
 
