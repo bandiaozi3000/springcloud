@@ -1,0 +1,39 @@
+server:
+  port: 8902
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # 配置存储配置信息的Git仓库
+          uri: https://gitee.com/sun_ming_li/springcloud-config-server.git
+          username: 13298307537
+          password: sun5985705
+          # 开启启动时直接从git获取配置
+          clone-on-start: true
+          # 获取子目录下的配置,该{application}占位符代表的是获取配置的client的spring.application.name属性或者是
+          #spring.cloud.config.name属性,该值是git下的一个子文件夹路径.
+          search-paths: '{application}'
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+
+# 暴露bus刷新配置的端点,通过调用/actuator/bus-refresh接口,可实现所有依赖该服务的cilent更新配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'
+

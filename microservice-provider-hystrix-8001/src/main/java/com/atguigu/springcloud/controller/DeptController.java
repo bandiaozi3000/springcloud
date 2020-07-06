@@ -25,12 +25,11 @@ public class DeptController {
     }
 
     @GetMapping("/dept/{id}")
-    @HystrixCommand(fallbackMethod = "getByIdFallback")
-    public Dept getById(@PathVariable("id") Long id){
+    public Dept getById(@PathVariable("id") Long id) throws Exception {
         Dept dept = deptService.findById(id);
-        if(dept==null){
-            throw new RuntimeException("该id"+id+"没有对应的信息");
-        }
+        dept = deptService.findById(id);
+        dept = deptService.findById(id);
+        dept = deptService.findById(id);
         return dept;
     }
 
@@ -50,12 +49,6 @@ public class DeptController {
 //        return this.discoveryClient;
 //    }
 
-    public Dept getByIdFallback(@PathVariable("id")Long id){
-        Dept dept = new Dept();
-        dept.setDeptNo(id);
-        dept.setDname("该id"+id+"没有对应的信息");
-        dept.setDb_source("no this database in Mysql");
-        return dept;
-    }
+
 
 }

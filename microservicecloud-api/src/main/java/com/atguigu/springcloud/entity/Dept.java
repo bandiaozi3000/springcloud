@@ -2,6 +2,7 @@ package com.atguigu.springcloud.entity;
 
 
 public class Dept {
+
 	private Long deptNo;
 	private String dName;
 	private String dbSource;

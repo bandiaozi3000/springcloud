@@ -1,0 +1,41 @@
+server:
+  port: 9301
+
+spring:
+  application:
+    name: admin-server-security
+  security:
+    user:
+      # 配置登录用户名和密码
+       name: root
+       password: 123456
+  boot:
+    admin:
+      discovery:
+        # 不显示admin-security-server的监控信息
+        ignored-services: ${spring.application.name}
+#
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+# 添加开启admin的日志监控
+logging:
+  file: admin-server-security.log

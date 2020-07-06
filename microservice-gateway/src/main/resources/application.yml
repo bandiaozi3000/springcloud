@@ -1,0 +1,46 @@
+server:
+  port: 9201
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #开启从注册中心动态创建路由的功能
+          enabled: true
+          #使用小写服务名，默认是大写
+          lower-case-service-id: true
+      #针对的错误是路由成功但是执行失败,并不能针对404这种状况做降级处理
+      #下述yml格式解析.default-filters一个变量,该变量是一个list，
+      #   - name: Hystrix
+      #       args:
+      #          name: fallbackcmd
+      #          fallbackUri: forward:/fallback  这一部分可以看做是list内的一个对象,一个属性name,一个属性args,而args又是一个
+      #        对象.大致的结构对象就是这样.
+      default-filters:
+       - name: Hystrix
+         args:
+           name: fallbackcmd
+           fallbackUri: forward:/fallback
+          # 每秒允许处理的请求数量
+       - name: RequestRateLimiter
+         args:
+           redis-rate-limiter.replenishRate: 50
+          # 每秒最大处理的请求数量
+           redis-rate-limiter.burstCapacity: 50
+          # 限流策略，对应策略的Bean
+           key-resolver: "#{@ipKeyResolver}"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

@@ -7,6 +7,21 @@ eureka:
   client:      #注意和instance是平级的关系
     register-with-eureka: false   #不用注册本身
     fetch-registry: false   #不需要检索服务
+#    service-url:
+#       defaultZone: http://localhost:7002/eureka/,http://localhost:7003/eureka/  #设置与Eureka服务端交互地址
     service-url:
-       defaultZone: http://localhost:7002/eureka/,http://localhost:7003/eureka/  #设置与Eureka服务端交互地址
+       defaultZone: http://localhost:7001/eureka/ #设置与Eureka服务端交互地址
+
+
+management:
+  endpoints:
+    web:
+      base-path:
+      exposure:
+        include: info
+    auditevents:
+      enabled: false
+
+
+
 

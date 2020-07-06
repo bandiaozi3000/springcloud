@@ -2,6 +2,7 @@ package com.atguigu.springcloud.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.springframework.cloud.netflix.zuul.util.ZuulRuntimeException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,18 +65,25 @@ public class ZuulFilterDemo extends ZuulFilter {
         RequestContext rc = RequestContext.getCurrentContext();
         HttpServletRequest request = rc.getRequest();
         HttpServletResponse response = rc.getResponse();
-
         System.out.println("调用了过滤器");
         String money = request.getParameter("money");
         if (money == null){
             try {
+                doSomething();
                 rc.setSendZuulResponse(false);
                 response.setContentType("text/html;charset=utf-8");
                 response.getWriter().write("没有钱不给过");
             } catch (IOException e) {
                 e.printStackTrace();
+            }catch (Exception e){
+                throw new ZuulRuntimeException(e);
             }
         }
+
         return null;
+    }
+
+    public void doSomething()  {
+        throw new RuntimeException("error.......");
     }
 }
